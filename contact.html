@@ -131,43 +131,19 @@
                 <p class="cc-body-large text-warmGray-400">Have a feature request, found a bug, or just want to say hi? Drop us a line.</p>
             </div>
             
-            <div class="cc-card p-8 md:p-12 border border-warmGray-200 shadow-sm">
-                <form action="#" method="POST" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="name" class="block text-sm font-bold text-charcoal mb-2">Name</label>
-                            <input type="text" id="name" name="name" required class="w-full bg-cream border border-warmGray-200 text-charcoal rounded px-4 py-3 focus:outline-none focus:border-cherry-600 transition-colors" placeholder="Your name">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-bold text-charcoal mb-2">Email</label>
-                            <input type="email" id="email" name="email" required class="w-full bg-cream border border-warmGray-200 text-charcoal rounded px-4 py-3 focus:outline-none focus:border-cherry-600 transition-colors" placeholder="you@example.com">
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <label for="subject" class="block text-sm font-bold text-charcoal mb-2">Subject</label>
-                        <select id="subject" name="subject" class="w-full bg-cream border border-warmGray-200 text-charcoal rounded px-4 py-3 focus:outline-none focus:border-cherry-600 transition-colors appearance-none cursor-pointer">
-                            <option value="general">General Inquiry</option>
-                            <option value="bug">Report a Bug</option>
-                            <option value="feature">Feature Request</option>
-                            <option value="partnership">Partnership / Sponsorship</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="message" class="block text-sm font-bold text-charcoal mb-2">Message</label>
-                        <textarea id="message" name="message" rows="5" required class="w-full bg-cream border border-warmGray-200 text-charcoal rounded px-4 py-3 focus:outline-none focus:border-cherry-600 transition-colors resize-none" placeholder="How can we help you?"></textarea>
-                    </div>
-                    
-                    <button type="button" onclick="alert('Demo: Message Sent!')" class="w-full bg-cherry-600 hover:bg-cherry-700 text-white font-bold py-4 rounded transition-colors flex justify-center items-center gap-2">
-                        <span>Send Message</span>
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                    </button>
-                </form>
-                
-                <div class="mt-12 text-center text-warmGray-400 text-sm">
-                    <p>Alternatively, email us directly at <a href="mailto:contact@cherrychic.in" class="text-cherry-600 font-bold hover:underline">contact@cherrychic.in</a></p>
+            <div class="cc-card p-8 md:p-12 border border-warmGray-200 shadow-sm text-center">
+                <div class="w-16 h-16 bg-cherry-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="mail" class="w-8 h-8 text-cherry-600"></i>
                 </div>
+                <h2 class="font-serif text-2xl font-bold text-charcoal mb-4">Email Us</h2>
+                <p class="text-warmGray-400 mb-8 max-w-md mx-auto">
+                    We'd love to hear from you. For all inquiries, feature requests, and support, please reach out to us directly via email.
+                </p>
+                
+                <a href="mailto:contact@cherrychic.in" class="inline-flex items-center gap-2 px-8 py-4 bg-cherry-600 hover:bg-cherry-700 text-white font-bold rounded transition-colors mx-auto">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    contact@cherrychic.in
+                </a>
             </div>
         </div>
     </main>
