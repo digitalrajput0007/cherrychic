@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CherryChic | The Ultimate Creator Toolkit & Studio</title>
+    <meta name="description" content="A curated bento box of free, client-side tools for digital creators: Safe Zone Checkers, Aesthetic Font Stylers, Rate Calculators, and more.">
+    <link rel="canonical" href="https://cherrychic.in/" />
+    
+    <!-- OpenGraph & Twitter -->
+    <meta property="og:title" content="CherryChic | The Ultimate Creator Toolkit & Studio">
+    <meta property="og:description" content="A curated bento box of free, client-side tools for digital creators.">
+    <meta property="og:url" content="https://cherrychic.in/">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#07090e',
+                        surface: '#0d111a',
+                        surfaceHover: '#131926',
+                        border: 'rgba(255, 255, 255, 0.06)',
+                        borderHover: 'rgba(244, 63, 94, 0.3)',
+                        brand: { 500: '#f43f5e', 600: '#e11d48' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        'noise': 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { 
+            background-color: #07090e; 
+            color: #f8fafc; 
+            scroll-behavior: smooth;
+            position: relative;
+        }
+        
+        /* Subtle noise texture */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='0.03' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .glass { background: rgba(7, 9, 14, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+        
+        .bento-card {
+            background: linear-gradient(145deg, #0d111a, #0a0c13);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(244,63,94,0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(244, 63, 94, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px -10px rgba(244, 63, 94, 0.1);
+        }
+        
+        .bento-card:hover::before {
+            opacity: 1;
+        }
+
+        .hover-arrow { transition: transform 0.3s; }
+        .bento-card:hover .hover-arrow { transform: translate(4px, -4px); color: #f43f5e; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #07090e; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        
+        .filter-pill.active {
+            background-color: rgba(244, 63, 94, 0.15);
+            color: #f43f5e;
+            border-color: rgba(244, 63, 94, 0.3);
+        }
+        
+        /* Tooltip */
+        .tooltip { opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+        .show-tooltip { opacity: 1; }
+
+        input[type=range].mini-slider { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range].mini-slider::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: #f43f5e; cursor: pointer; margin-top: -6px; }
+        input[type=range].mini-slider::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 2px; }
+        input[type=range].mini-slider:focus { outline: none; }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "CherryChic",
+      "url": "https://cherrychic.in/"
+    }
+    </script>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative">
+
+    <!-- Global Header -->
+    <header class="sticky top-0 w-full z-40 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="p-2 bg-brand-500/10 rounded-xl group-hover:bg-brand-500/20 transition-colors border border-brand-500/20">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-brand-500"></i>
+                </div>
+                <span class="font-display font-bold text-xl tracking-tight text-white">CherryChic Studio</span>
+            </a>
+            
+            <nav class="hidden lg:flex items-center space-x-6">
+                <a href="#bento-grid" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Tools</a>
+                <a href="/tools/rate-calculator/" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Rate Calculator</a>
+                <a href="/tools/legal-generator/" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Legal Generator</a>
+            </nav>
+            
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center gap-2 bg-surface border border-border rounded-full px-4 py-2 text-sm text-slate-400">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                    <span>Search tools...</span>
+                    <span class="ml-2 px-1.5 py-0.5 rounded bg-white/5 text-xs text-slate-500 border border-white/5">⌘K</span>
+                </div>
+                <button id="mobile-menu-btn" class="lg:hidden p-2 text-slate-300 hover:text-white bg-surface border border-border rounded-xl">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-50 bg-bg/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
+        <div class="p-4 flex justify-end">
+            <button id="mobile-close-btn" class="p-2 text-slate-300 hover:text-white bg-surface border border-border rounded-xl">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col items-center gap-8 mt-12 text-lg font-medium">
+            <a href="#bento-grid" class="mobile-link text-slate-300 hover:text-brand-400">All Tools</a>
+            <a href="/tools/rate-calculator/" class="mobile-link text-slate-300 hover:text-brand-400">Rate Calculator</a>
+            <a href="/tools/legal-generator/" class="mobile-link text-slate-300 hover:text-brand-400">Legal Generator</a>
+        </nav>
+    </div>
+
+    <main class="flex-grow pb-24 relative z-10">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-20 pb-16 text-center relative">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+            
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-surface text-xs font-semibold text-slate-300 mb-8 uppercase tracking-widest shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                100% Client-Side. Zero Sign-ups.
+            </div>
+            
+            <h1 class="font-display text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
+                Crafted tools for the <br class="hidden md:block"/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-rose-400">modern creator.</span>
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-lg md:text-xl leading-relaxed">
+                A highly-curated bento box of utilities designed to elevate your aesthetic, protect your rights, and calculate your true worth.
+            </p>
+        </section>
+
+        <!-- Filter Controls -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 mb-8 flex justify-center lg:justify-start">
+            <div class="flex flex-wrap items-center gap-2" id="filter-container">
+                <button class="filter-pill active px-4 py-2 rounded-full border border-border bg-surface text-sm font-medium text-slate-300 transition-colors" data-filter="all">All Tools</button>
+                <button class="filter-pill px-4 py-2 rounded-full border border-border bg-surface text-sm font-medium text-slate-300 transition-colors hover:border-brand-500/30" data-filter="video">Video & Aesthetic</button>
+                <button class="filter-pill px-4 py-2 rounded-full border border-border bg-surface text-sm font-medium text-slate-300 transition-colors hover:border-brand-500/30" data-filter="monetization">Monetization</button>
+                <button class="filter-pill px-4 py-2 rounded-full border border-border bg-surface text-sm font-medium text-slate-300 transition-colors hover:border-brand-500/30" data-filter="legal">Legal & Compliance</button>
+            </div>
+        </div>
+
+        <!-- BENTO GRID -->
+        <div id="bento-grid" class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- CARD 1: Safe Zone Checker (2 Cols) -->
+            <a href="/tools/safe-zone-checker/" class="bento-card rounded-3xl p-8 lg:col-span-2 flex flex-col md:flex-row gap-8 items-center group tool-item" data-category="video">
+                <div class="flex-1 z-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-semibold uppercase tracking-wide bg-white/5 border border-white/10 text-slate-300 rounded-md">TikTok</span>
+                        <span class="px-2.5 py-1 text-xs font-semibold uppercase tracking-wide bg-white/5 border border-white/10 text-slate-300 rounded-md">Reels</span>
+                        <span class="px-2.5 py-1 text-xs font-semibold uppercase tracking-wide bg-white/5 border border-white/10 text-slate-300 rounded-md">Shorts</span>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold text-white mb-3 flex items-center gap-3">
+                        Video Safe Zone Overlay <i data-lucide="arrow-up-right" class="w-6 h-6 text-slate-500 hover-arrow"></i>
+                    </h2>
+                    <p class="text-slate-400 text-base leading-relaxed mb-6">Stop guessing where UI elements will cover your video. Preview exact platform overlays for TikTok, Instagram Reels, and YouTube Shorts instantly.</p>
+                </div>
+                <!-- Visual Demo Right -->
+                <div class="w-full md:w-64 h-80 bg-bg rounded-2xl border border-white/10 relative overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <!-- Simulated safe zone guides -->
+                    <div class="absolute inset-4 border-2 border-dashed border-emerald-500/30 rounded-lg"></div>
+                    <div class="absolute bottom-10 right-4 flex flex-col gap-3">
+                        <div class="w-8 h-8 rounded-full bg-white/10"></div>
+                        <div class="w-8 h-8 rounded-full bg-white/10"></div>
+                        <div class="w-8 h-8 rounded-full bg-white/10"></div>
+                    </div>
+                    <div class="absolute bottom-4 left-4 w-32 h-4 bg-white/10 rounded-full"></div>
+                    <div class="absolute bottom-[40%] px-3 py-1.5 bg-emerald-500 text-bg text-xs font-bold rounded shadow-[0_0_15px_rgba(16,185,129,0.5)]">Subtitles Safe</div>
+                </div>
+            </a>
+
+            <!-- CARD 2: Color Studio (1 Col) -->
+            <a href="/tools/color-extractor/" class="bento-card rounded-3xl p-8 flex flex-col justify-between group tool-item" data-category="video">
+                <div class="z-10 relative">
+                    <div class="absolute top-0 right-0 text-slate-500 hover-arrow">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                    <div class="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center mb-6">
+                        <i data-lucide="droplet" class="w-6 h-6 text-brand-500"></i>
+                    </div>
+                    <h2 class="font-display text-2xl font-bold text-white mb-2">Color Extractor</h2>
+                    <p class="text-slate-400 text-sm mb-6">Extract dominant aesthetic palettes from any image.</p>
+                </div>
+                
+                <!-- Live Interactive Strip (intercepts clicks so it doesn't navigate) -->
+                <div class="flex h-16 w-full rounded-xl overflow-hidden border border-white/10 shadow-lg relative" id="demo-palette">
+                    <div class="flex-1 bg-[#f43f5e] cursor-pointer hover:flex-[1.5] transition-all" data-hex="#f43f5e"></div>
+                    <div class="flex-1 bg-[#fb7185] cursor-pointer hover:flex-[1.5] transition-all" data-hex="#fb7185"></div>
+                    <div class="flex-1 bg-[#fda4af] cursor-pointer hover:flex-[1.5] transition-all" data-hex="#fda4af"></div>
+                    <div class="flex-1 bg-[#38bdf8] cursor-pointer hover:flex-[1.5] transition-all" data-hex="#38bdf8"></div>
+                    <div class="flex-1 bg-[#818cf8] cursor-pointer hover:flex-[1.5] transition-all" data-hex="#818cf8"></div>
+                    <div id="palette-tooltip" class="absolute top-2 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[10px] font-bold px-2 py-1 rounded tooltip">Copied!</div>
+                </div>
+            </a>
+
+            <!-- CARD 3: Font Styler (1 Col) -->
+            <a href="/tools/bio-font-styler/" class="bento-card rounded-3xl p-8 flex flex-col justify-between group tool-item" data-category="video">
+                <div class="z-10 relative">
+                    <div class="absolute top-0 right-0 text-slate-500 hover-arrow">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                    <div class="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center mb-6">
+                        <i data-lucide="type" class="w-6 h-6 text-brand-500"></i>
+                    </div>
+                    <h2 class="font-display text-2xl font-bold text-white mb-2">Aesthetic Font Styler</h2>
+                    <p class="text-slate-400 text-sm mb-6">Convert plain text into aesthetic Unicode fonts instantly.</p>
+                </div>
+                
+                <!-- Live Demo Input -->
+                <div class="bg-bg border border-white/10 p-4 rounded-xl" onclick="event.preventDefault();">
+                    <input type="text" id="demo-font-input" class="w-full bg-transparent text-sm text-white focus:outline-none placeholder-slate-500 border-b border-white/10 pb-2 mb-3" value="chic" placeholder="Type here...">
+                    <div class="text-2xl text-brand-400" id="demo-font-output">𝒸𝒽𝒾𝒸</div>
+                </div>
+            </a>
+
+            <!-- CARD 4: Rate Calculator (2 Cols) -->
+            <a href="/tools/rate-calculator/" class="bento-card rounded-3xl p-8 lg:col-span-2 flex flex-col md:flex-row gap-8 items-center justify-between group tool-item" data-category="monetization">
+                <div class="flex-1 z-10 pr-0 md:pr-8">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="px-2.5 py-1 text-xs font-semibold uppercase tracking-wide bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-md">Monetization</span>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold text-white mb-3 flex items-center gap-3">
+                        Sponsorship Rate Calculator <i data-lucide="arrow-up-right" class="w-6 h-6 text-slate-500 hover-arrow"></i>
+                    </h2>
+                    <p class="text-slate-400 text-base leading-relaxed">Calculate data-driven rates for brand deals based on your following, engagement, niche, and usage rights. Generate a professional pitch email instantly.</p>
+                </div>
+                
+                <!-- Interactive Mini Slider -->
+                <div class="w-full md:w-72 bg-bg border border-white/10 p-6 rounded-2xl flex-shrink-0" onclick="event.preventDefault();">
+                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Live Estimate</p>
+                    <div class="flex justify-between items-end mb-2">
+                        <span class="text-sm text-slate-300">Views per Reel</span>
+                        <span class="text-sm font-bold text-white" id="demo-rate-views">50,000</span>
+                    </div>
+                    <input type="range" id="demo-rate-slider" class="mini-slider mb-6" min="10000" max="500000" step="5000" value="50000">
+                    
+                    <div class="p-3 bg-brand-500/10 border border-brand-500/20 rounded-xl">
+                        <p class="text-xs text-brand-400 mb-1">Recommended Ask</p>
+                        <p class="text-2xl font-display font-bold text-white" id="demo-rate-output">$650 - $950</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- CARD 5: Legal Generator (1 Col) -->
+            <a href="/tools/legal-generator/" class="bento-card rounded-3xl p-8 flex flex-col justify-between group tool-item lg:col-span-1" data-category="legal">
+                <div class="z-10 relative">
+                    <div class="absolute top-0 right-0 text-slate-500 hover-arrow">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                    <div class="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center mb-6">
+                        <i data-lucide="scale" class="w-6 h-6 text-brand-500"></i>
+                    </div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-md">AdSense Ready</span>
+                    </div>
+                    <h2 class="font-display text-2xl font-bold text-white mb-2">Privacy & Terms Generator</h2>
+                    <p class="text-slate-400 text-sm">Generate FTC and Google AdSense compliant policies in 30 seconds.</p>
+                </div>
+            </a>
+
+            <!-- CARD 6: Carousel Splitter (2 Cols) -->
+            <a href="/tools/carousel-splitter/" class="bento-card rounded-3xl p-8 lg:col-span-2 flex flex-col md:flex-row gap-8 items-center justify-between group tool-item" data-category="video">
+                <div class="flex-1 z-10">
+                    <div class="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center mb-6">
+                        <i data-lucide="scissors" class="w-6 h-6 text-brand-500"></i>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold text-white mb-3 flex items-center gap-3">
+                        Carousel Image Splitter <i data-lucide="arrow-up-right" class="w-6 h-6 text-slate-500 hover-arrow"></i>
+                    </h2>
+                    <p class="text-slate-400 text-base leading-relaxed">Slice panoramic images perfectly for seamless Instagram carousels. Supports native 4:5 aspect ratio or free split.</p>
+                </div>
+                <!-- Visual Graphic -->
+                <div class="w-full md:w-64 h-40 bg-bg rounded-xl border border-white/10 flex overflow-hidden flex-shrink-0 relative">
+                    <div class="flex-1 bg-gradient-to-br from-brand-500/20 to-purple-500/20 border-r border-dashed border-white/20"></div>
+                    <div class="flex-1 bg-gradient-to-br from-brand-500/20 to-purple-500/20 border-r border-dashed border-white/20 relative">
+                        <i data-lucide="scissors" class="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white/50 bg-bg"></i>
+                    </div>
+                    <div class="flex-1 bg-gradient-to-br from-brand-500/20 to-purple-500/20 relative">
+                        <i data-lucide="scissors" class="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white/50 bg-bg"></i>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="border-t border-white/5 py-12 text-center text-slate-500 text-sm mt-12 bg-[#05070a] relative z-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p>&copy; 2026 CherryChic Studio. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="/privacy-policy.html" class="hover:text-brand-400 transition-colors">Privacy</a>
+                <a href="/terms.html" class="hover:text-brand-400 transition-colors">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Mobile Drawer logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileCloseBtn = document.getElementById('mobile-close-btn');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileDrawer.classList.remove('translate-x-full');
+        });
+        mobileCloseBtn.addEventListener('click', () => {
+            mobileDrawer.classList.add('translate-x-full');
+        });
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileDrawer.classList.add('translate-x-full');
+            });
+        });
+
+        // Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-pill');
+        const toolItems = document.querySelectorAll('.tool-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active', 'border-brand-500/50'));
+                filterBtns.forEach(b => b.classList.add('border-border'));
+                btn.classList.add('active', 'border-brand-500/50');
+                btn.classList.remove('border-border');
+
+                const filter = btn.dataset.filter;
+                toolItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category.includes(filter)) {
+                        item.style.display = '';
+                        setTimeout(() => item.style.opacity = '1', 10);
+                    } else {
+                        item.style.opacity = '0';
+                        setTimeout(() => item.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+        // Interactive Card 2: Color Palette Copy
+        const swatches = document.querySelectorAll('#demo-palette > div[data-hex]');
+        const tooltip = document.getElementById('palette-tooltip');
+        
+        swatches.forEach(swatch => {
+            swatch.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // prevent navigation
+                const hex = swatch.dataset.hex;
+                navigator.clipboard.writeText(hex).then(() => {
+                    tooltip.classList.add('show-tooltip');
+                    setTimeout(() => tooltip.classList.remove('show-tooltip'), 1500);
+                }).catch(() => {
+                    // Fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = hex;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    tooltip.classList.add('show-tooltip');
+                    setTimeout(() => tooltip.classList.remove('show-tooltip'), 1500);
+                });
+            });
+        });
+
+        // Interactive Card 3: Font Styler
+        const demoFontInput = document.getElementById('demo-font-input');
+        const demoFontOutput = document.getElementById('demo-font-output');
+        
+        const cursiveMap = {
+            'a': '𝒶', 'b': '𝒷', 'c': '𝒸', 'd': '𝒹', 'e': 'ℯ', 'f': '𝒻', 'g': 'ℊ', 'h': '𝒽', 'i': '𝒾', 
+            'j': '𝒿', 'k': '𝓀', 'l': '𝓁', 'm': '𝓂', 'n': '𝓃', 'o': 'ℴ', 'p': '𝓅', 'q': '𝓆', 'r': '𝓇', 
+            's': '𝓈', 't': '𝓉', 'u': '𝓊', 'v': '𝓋', 'w': '𝓌', 'x': '𝓍', 'y': '𝓎', 'z': '𝓏'
+        };
+
+        demoFontInput.addEventListener('input', (e) => {
+            const text = e.target.value.toLowerCase();
+            let out = '';
+            for(let char of text) {
+                out += cursiveMap[char] || char;
+            }
+            demoFontOutput.textContent = out || '𝒸𝒽𝒾𝒸';
+        });
+
+        // Interactive Card 4: Mini Rate Calculator
+        const demoRateSlider = document.getElementById('demo-rate-slider');
+        const demoRateViews = document.getElementById('demo-rate-views');
+        const demoRateOutput = document.getElementById('demo-rate-output');
+
+        demoRateSlider.addEventListener('input', (e) => {
+            const v = parseInt(e.target.value);
+            demoRateViews.textContent = new Intl.NumberFormat('en-US').format(v);
+            
+            // Simplified mini logic
+            const basePrice = (50000 / 10000 * 15) + (v / 1000 * 25) + 350; // generic deliverables assumed
+            const recommended = Math.max(basePrice * 1.2, 100);
+            
+            const low = Math.floor(recommended * 0.8);
+            const high = Math.floor(recommended * 1.2);
+            
+            demoRateOutput.textContent = `$${new Intl.NumberFormat('en-US').format(low)} - $${new Intl.NumberFormat('en-US').format(high)}`;
+        });
+    </script>
+</body>
+</html>

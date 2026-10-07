@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | CherryChic</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#090d16',
+                        surface: '#111624',
+                        border: 'rgba(255, 255, 255, 0.08)',
+                        brand: { 500: '#f43f5e', 600: '#e11d48' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { background-color: #090d16; color: #f8fafc; scroll-behavior: smooth; }
+        .glass { background: rgba(9, 13, 22, 0.8); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-surface { background: rgba(17, 22, 36, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative">
+
+    <!-- Global Header -->
+    <header class="sticky top-0 w-full z-40 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="p-2 bg-brand-500/10 rounded-xl group-hover:bg-brand-500/20 transition-colors">
+                    <i data-lucide="sparkles" class="w-6 h-6 text-brand-500"></i>
+                </div>
+                <span class="font-display font-bold text-2xl tracking-tight text-white">CherryChic</span>
+            </a>
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="/#tools-section" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">All Tools</a>
+                <a href="/contact.html" class="text-sm font-medium text-brand-400">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-grow py-16 flex items-center justify-center">
+        <div class="max-w-md w-full px-4 sm:px-6 text-center">
+            
+            <div class="glass-surface p-10 rounded-3xl border-t-4 border-t-brand-500 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-16 -right-16 w-32 h-32 bg-brand-500/20 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="w-16 h-16 bg-brand-500/10 border border-brand-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="mail" class="w-8 h-8 text-brand-500"></i>
+                </div>
+                
+                <h1 class="font-display text-3xl font-bold text-white mb-2">Get in Touch</h1>
+                <p class="text-slate-400 text-sm mb-8">Have a feature request, bug report, or partnership inquiry? Drop us a line.</p>
+                
+                <a href="mailto:contact@cherrychic.in" class="inline-flex items-center gap-2 bg-bg hover:bg-white/5 border border-border text-white font-medium py-3 px-6 rounded-xl transition-colors w-full justify-center">
+                    <i data-lucide="send" class="w-4 h-4"></i> contact@cherrychic.in
+                </a>
+                
+                <p class="text-xs text-slate-500 mt-6">We aim to respond to all inquiries within 24-48 hours.</p>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="glass-surface border-t border-border py-8 text-center text-slate-500 text-sm">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p>&copy; 2026 CherryChic. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="/privacy-policy.html" class="hover:text-brand-400 transition-colors">Privacy</a>
+                <a href="/terms.html" class="hover:text-brand-400 transition-colors">Terms</a>
+            </div>
+        </div>
+    </footer>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
