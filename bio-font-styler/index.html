@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic Bio & Unicode Font Generator - CherryChic</title>
+    <meta name="description" content="Generate beautiful cursive, bold, and aesthetic fonts using Unicode characters for your social bios. Works on Instagram, TikTok, Twitter, and more.">
+    <link rel="canonical" href="https://cherrychic.in/bio-font-styler/" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#fcfbf9',
+                        charcoal: '#1a1a1a',
+                        cherry: { 100: '#fcebeb', 500: '#a63b51', 600: '#8c2a3e', 700: '#6b1f2e' },
+                        warmGray: { 200: '#e2e0dc', 300: '#d1cfcb', 400: '#a8a5a1' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="../global.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-cream text-charcoal font-sans antialiased flex flex-col min-h-screen">
+
+            <!-- Navbar -->
+    <nav class="w-full border-b border-warmGray-200 bg-white sticky top-0 z-50" id="navbar">
+        <div class="cc-container h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-cherry-600 rounded flex items-center justify-center text-white">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </div>
+                <span class="font-serif font-bold text-xl tracking-tight text-charcoal">CherryChic</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4">
+                    <i data-lucide="home" class="w-4 h-4"></i> Home
+                </a>
+                
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Video & Social <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/safe-zone-checker/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Safe Zone Checker</a>
+                        <a href="/caption-spacer/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Caption Spacer</a>
+                        <a href="/carousel-splitter/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Carousel Splitter</a>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Design & Typography <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/color-studio/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Color Extractor</a>
+                        <a href="/bio-font-styler/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Bio Font Styler</a>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Business & Legal <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/rate-calculator/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Rate Calculator</a>
+                        <a href="/legal-generator/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Legal Generator</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="cc-btn-primary hidden sm:inline-flex">Contact Us</a>
+                <button id="mobile-menu-btn" class="md:hidden text-charcoal">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+        <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-50 bg-white/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
+        <div class="p-4 flex justify-end">
+            <button id="mobile-close-btn" class="p-2 text-charcoal hover:text-cherry-600 bg-cream border border-warmGray-200 rounded">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col items-center gap-6 mt-8 text-lg font-bold overflow-y-auto pb-20">
+            <a href="/" class="text-charcoal hover:text-cherry-600 flex items-center gap-2"><i data-lucide="home" class="w-5 h-5"></i> Home</a>
+            
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Video & Social</h3>
+            <a href="/safe-zone-checker/" class="text-charcoal hover:text-cherry-600">Safe Zone Checker</a>
+            <a href="/caption-spacer/" class="text-charcoal hover:text-cherry-600">Caption Spacer</a>
+            <a href="/carousel-splitter/" class="text-charcoal hover:text-cherry-600">Carousel Splitter</a>
+
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Design & Typography</h3>
+            <a href="/color-studio/" class="text-charcoal hover:text-cherry-600">Color Extractor</a>
+            <a href="/bio-font-styler/" class="text-charcoal hover:text-cherry-600">Bio Font Styler</a>
+            
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Business & Legal</h3>
+            <a href="/rate-calculator/" class="text-charcoal hover:text-cherry-600">Rate Calculator</a>
+            <a href="/legal-generator/" class="text-charcoal hover:text-cherry-600">Legal Generator</a>
+            
+            <div class="w-16 h-px bg-warmGray-200 my-4"></div>
+            <a href="/contact.html" class="text-charcoal hover:text-cherry-600">Contact Us</a>
+        </nav>
+    </div>
+
+    <!-- Main Tool Section -->
+    <main class="flex-grow pb-20 pt-10">
+        <div class="cc-container max-w-4xl">
+            
+            <!-- Breadcrumb -->
+            <div class="text-sm text-warmGray-400 mb-6 flex items-center gap-2">
+                <a href="/" class="hover:text-cherry-600">Home</a>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <a href="/#tools" class="hover:text-cherry-600">Design</a>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <span class="text-charcoal font-medium">Bio Font Styler</span>
+            </div>
+
+            <!-- Tool Header -->
+            <div class="mb-10">
+                <span class="cc-eyebrow mb-2 block">Design Tools</span>
+                <h1 class="cc-h1 mb-4">Aesthetic Font Generator</h1>
+                <p class="cc-body-large text-warmGray-400">Generate beautiful cursive, bold, and aesthetic fonts using Unicode characters for your social bios. Works on Instagram, TikTok, Twitter, and more.</p>
+            </div>
+
+            <!-- Tool Workspace -->
+            <div class="cc-card mb-12 bg-white">
+                
+                <input type="text" id="main-input" class="w-full bg-cream border border-warmGray-200 rounded-lg px-6 py-4 text-xl text-charcoal placeholder-warmGray-400 focus:outline-none focus:border-cherry-600 focus:ring-1 focus:ring-cherry-600 transition-shadow mb-6" placeholder="Type your text here..." value="Aesthetic Vibes">
+                
+                <!-- Filter Tags -->
+                <div class="flex flex-wrap gap-2 mb-6" id="filter-container">
+                    <button class="filter-btn active bg-cherry-600 text-white px-4 py-1.5 rounded text-sm font-medium transition-colors border border-cherry-600" data-filter="All">All</button>
+                    <button class="filter-btn bg-white text-charcoal hover:bg-cream px-4 py-1.5 rounded text-sm font-medium transition-colors border border-warmGray-200" data-filter="Cursive">Cursive</button>
+                    <button class="filter-btn bg-white text-charcoal hover:bg-cream px-4 py-1.5 rounded text-sm font-medium transition-colors border border-warmGray-200" data-filter="Bold">Bold</button>
+                    <button class="filter-btn bg-white text-charcoal hover:bg-cream px-4 py-1.5 rounded text-sm font-medium transition-colors border border-warmGray-200" data-filter="Cute / Aesthetic">Cute / Aesthetic</button>
+                    <button class="filter-btn bg-white text-charcoal hover:bg-cream px-4 py-1.5 rounded text-sm font-medium transition-colors border border-warmGray-200" data-filter="Minimalist">Minimalist</button>
+                </div>
+                
+                <!-- Output Grid -->
+                <div id="output-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Cards injected here by JS -->
+                </div>
+            </div>
+
+            <!-- Ad Placeholder -->
+            <div class="w-full flex justify-center mb-16">
+                <div class="w-full max-w-[728px] h-[90px] bg-cream border border-warmGray-200 rounded flex items-center justify-center text-warmGray-400 text-sm italic">
+                    Advertisement Placeholder
+                </div>
+            </div>
+
+            <!-- SEO Content & FAQ -->
+            <article class="prose prose-slate max-w-none">
+                <h2 class="cc-h2 mb-4">Unicode Font Compatibility on Social Media</h2>
+                <p class="cc-body mb-4">When you use an "aesthetic font generator," you aren't actually changing the font file (like Arial or Times New Roman). Instead, you are converting standard letters into specialized <strong>Unicode characters</strong>. Unicode is a universal computing standard that assigns a unique number to every letter, symbol, and emoji across different languages and alphabets.</p>
+                
+                <p class="cc-body mb-8">Because these are actual text characters and not styling code, you can easily copy and paste them into your Instagram bio, TikTok captions, Twitter name, or Discord messages. However, compatibility can vary slightly depending on the user's device and operating system.</p>
+                
+                <h3 class="cc-h3 mb-3">Safe Character Guidelines</h3>
+                <ul class="list-disc pl-5 space-y-2 mb-10 cc-body">
+                    <li><strong>Instagram Bios:</strong> Highly compatible with almost all Unicode ranges. Script, Bold, and Minimalist fonts work flawlessly.</li>
+                    <li><strong>TikTok Usernames:</strong> Stricter validation. Stick to basic alphanumeric characters. However, TikTok <em>bios</em> accept most Unicode fonts.</li>
+                    <li><strong>Twitter/X:</strong> Excellent compatibility. Double-Struck and Bold Serif are wildly popular for display names.</li>
+                    <li><strong>Screen Readers:</strong> Be cautious when using heavy Unicode fonts for long paragraphs. Screen readers (used by visually impaired users) often read mathematical Unicode characters literally (e.g., "Mathematical bold italic small a" instead of just "a"). Use these fonts sparingly for names, headers, or short aesthetic phrases.</li>
+                </ul>
+
+                <h3 class="cc-h3 mb-4">Frequently Asked Questions</h3>
+                <div class="space-y-4">
+                    <details class="bg-cream rounded-lg border border-warmGray-200 p-4 cursor-pointer group">
+                        <summary class="font-medium text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center">
+                            Why do some letters look like blank boxes?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform group-open:rotate-180 text-cherry-600"></i>
+                        </summary>
+                        <p class="mt-3 text-warmGray-400 text-sm leading-relaxed">If you see a blank box, a question mark, or a crossed-out rectangle, it means the specific device or browser you (or your viewer) are using does not have a fallback font installed that supports that specific Unicode character. This usually only happens on very old Android or iOS versions.</p>
+                    </details>
+                    
+                    <details class="bg-cream rounded-lg border border-warmGray-200 p-4 cursor-pointer group">
+                        <summary class="font-medium text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center">
+                            Does this affect my account's searchability?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform group-open:rotate-180 text-cherry-600"></i>
+                        </summary>
+                        <p class="mt-3 text-warmGray-400 text-sm leading-relaxed">Yes. Social media search algorithms usually index standard alphabetic characters. If your actual username (e.g., @johndoe) is standard, you can freely use Unicode in your Display Name. However, if you are a brand trying to be discovered purely via search queries, keep critical keywords in standard text.</p>
+                    </details>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-white border-t border-warmGray-200 mt-auto">
+        <div class="cc-container grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-1">
+                <a href="/" class="flex items-center gap-2 mb-4">
+                    <div class="w-6 h-6 bg-cherry-600 rounded flex items-center justify-center text-white">
+                        <i data-lucide="sparkles" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-serif font-bold text-lg tracking-tight text-charcoal">CherryChic</span>
+                </a>
+                <p class="text-sm text-warmGray-400">Tools for modern creators.</p>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Popular Tools</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/safe-zone-checker/" class="text-warmGray-400 hover:text-cherry-600">Safe Zone Checker</a></li>
+                    <li><a href="/rate-calculator/" class="text-warmGray-400 hover:text-cherry-600">Rate Calculator</a></li>
+                    <li><a href="/color-studio/" class="text-warmGray-400 hover:text-cherry-600">Color Extractor</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/privacy-policy.html" class="text-warmGray-400 hover:text-cherry-600">Privacy Policy</a></li>
+                    <li><a href="/terms.html" class="text-warmGray-400 hover:text-cherry-600">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/contact.html" class="text-warmGray-400 hover:text-cherry-600">Get in Touch</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="cc-container mt-12 pt-8 border-t border-warmGray-200 text-sm text-warmGray-400 flex flex-col sm:flex-row items-center justify-between">
+            <p>&copy; 2026 CherryChic. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-charcoal text-white px-6 py-3 rounded shadow-2xl border border-charcoal transition-all duration-300 opacity-0 translate-y-10 pointer-events-none z-50 flex items-center gap-2 font-medium">
+        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+        Copied to Clipboard!
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            const input = document.getElementById('main-input');
+            const grid = document.getElementById('output-grid');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const toast = document.getElementById('toast');
+            
+            let currentFilter = 'All';
+
+            const fonts = [
+                {
+                    name: 'Bold Serif',
+                    tags: ['Bold', 'Minimalist'],
+                    transform: (text) => text.split('').map(c => {
+                        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 119743);
+                        if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 119737);
+                        if (c >= '0' && c <= '9') return String.fromCodePoint(c.codePointAt(0) + 120734);
+                        return c;
+                    }).join('')
+                },
+                {
+                    name: 'Mathematical Sans',
+                    tags: ['Minimalist'],
+                    transform: (text) => text.split('').map(c => {
+                        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 120197);
+                        if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 120191);
+                        if (c >= '0' && c <= '9') return String.fromCodePoint(c.codePointAt(0) + 120782);
+                        return c;
+                    }).join('')
+                },
+                {
+                    name: 'Cursive / Script',
+                    tags: ['Cursive', 'Cute / Aesthetic'],
+                    transform: (text) => {
+                        const offsetsA = { 'B': 0x212C, 'E': 0x2130, 'F': 0x2131, 'H': 0x210B, 'I': 0x2110, 'L': 0x2112, 'M': 0x2133, 'R': 0x211B };
+                        const offsets_a = { 'e': 0x212F, 'g': 0x210A, 'o': 0x2134 };
+                        return text.split('').map(c => {
+                            if (offsetsA[c]) return String.fromCodePoint(offsetsA[c]);
+                            if (offsets_a[c]) return String.fromCodePoint(offsets_a[c]);
+                            if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 119951);
+                            if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 119945);
+                            return c;
+                        }).join('');
+                    }
+                },
+                {
+                    name: 'Bold Cursive',
+                    tags: ['Cursive', 'Bold'],
+                    transform: (text) => text.split('').map(c => {
+                        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 120003);
+                        if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 119997);
+                        return c;
+                    }).join('')
+                },
+                {
+                    name: 'Double-Struck',
+                    tags: ['Cute / Aesthetic', 'Minimalist'],
+                    transform: (text) => {
+                        const offsets = { 'C': 0x2102, 'H': 0x210D, 'N': 0x2115, 'P': 0x2119, 'Q': 0x211A, 'R': 0x211D, 'Z': 0x2124 };
+                        return text.split('').map(c => {
+                            if (offsets[c]) return String.fromCodePoint(offsets[c]);
+                            if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 120055);
+                            if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 120049);
+                            if (c >= '0' && c <= '9') return String.fromCodePoint(c.codePointAt(0) + 120764);
+                            return c;
+                        }).join('');
+                    }
+                },
+                {
+                    name: 'Monospace',
+                    tags: ['Minimalist'],
+                    transform: (text) => text.split('').map(c => {
+                        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 120367);
+                        if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 120361);
+                        if (c >= '0' && c <= '9') return String.fromCodePoint(c.codePointAt(0) + 120814);
+                        return c;
+                    }).join('')
+                },
+                {
+                    name: 'Fraktur / Gothic',
+                    tags: ['Cute / Aesthetic', 'Bold'],
+                    transform: (text) => {
+                        const offsets = { 'C': 0x212D, 'H': 0x210C, 'I': 0x2111, 'R': 0x211C, 'Z': 0x2128 };
+                        return text.split('').map(c => {
+                            if (offsets[c]) return String.fromCodePoint(offsets[c]);
+                            if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 120107);
+                            if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 120101);
+                            return c;
+                        }).join('');
+                    }
+                },
+                {
+                    name: 'Small Caps',
+                    tags: ['Minimalist'],
+                    transform: (text) => {
+                        const map = {'a':'ᴀ','b':'ʙ','c':'ᴄ','d':'ᴅ','e':'ᴇ','f':'ғ','g':'ɢ','h':'ʜ','i':'ɪ','j':'ᴊ','k':'ᴋ','l':'ʟ','m':'ᴍ','n':'ɴ','o':'ᴏ','p':'ᴘ','q':'ǫ','r':'ʀ','s':'s','t':'ᴛ','u':'ᴜ','v':'ᴠ','w':'ᴡ','x':'x','y':'ʏ','z':'ᴢ'};
+                        return text.split('').map(c => map[c.toLowerCase()] || c.toUpperCase()).join('');
+                    }
+                },
+                {
+                    name: 'Aesthetic Spaced',
+                    tags: ['Cute / Aesthetic'],
+                    transform: (text) => text.split('').map(c => {
+                        if (c === ' ') return '　';
+                        if (c >= '!' && c <= '~') return String.fromCodePoint(c.codePointAt(0) + 65248);
+                        return c;
+                    }).join('')
+                },
+                {
+                    name: 'Circled',
+                    tags: ['Cute / Aesthetic'],
+                    transform: (text) => text.split('').map(c => {
+                        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 9333);
+                        if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 9359);
+                        if (c >= '1' && c <= '9') return String.fromCodePoint(c.codePointAt(0) + 9263);
+                        if (c === '0') return '⓪';
+                        return c;
+                    }).join('')
+                },
+                {
+                    name: 'Squared',
+                    tags: ['Cute / Aesthetic', 'Bold'],
+                    transform: (text) => text.split('').map(c => {
+                        if (c >= 'A' && c <= 'Z') return String.fromCodePoint(c.codePointAt(0) + 127247);
+                        if (c >= 'a' && c <= 'z') return String.fromCodePoint(c.codePointAt(0) + 127247 - 32); 
+                        return c;
+                    }).join('')
+                },
+                {
+                    name: 'Upside Down',
+                    tags: ['Cute / Aesthetic'],
+                    transform: (text) => {
+                        const map = {'a':'ɐ','b':'q','c':'ɔ','d':'p','e':'ǝ','f':'ɟ','g':'ƃ','h':'ɥ','i':'ᴉ','j':'ɾ','k':'ʞ','l':'l','m':'ɯ','n':'u','o':'o','p':'d','q':'b','r':'ɹ','s':'s','t':'ʇ','u':'n','v':'ʌ','w':'ʍ','x':'x','y':'ʎ','z':'z','A':'∀','B':'q','C':'Ɔ','D':'p','E':'Ǝ','F':'Ⅎ','G':'פ','H':'H','I':'I','J':'ſ','K':'ʞ','L':'˥','M':'W','N':'N','O':'O','P':'d','Q':'b','R':'ɹ','S':'S','T':'┴','U':'∩','V':'Λ','W':'M','X':'X','Y':'⅄','Z':'Z','.':'˙',',':"'"};
+                        return text.split('').reverse().map(c => map[c] || c).join('');
+                    }
+                },
+                {
+                    name: 'Subscript',
+                    tags: ['Minimalist'],
+                    transform: (text) => {
+                        const map = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉','a':'ₐ','e':'ₑ','h':'ₕ','i':'ᵢ','j':'ⱼ','k':'ₖ','l':'ₗ','m':'ₘ','n':'ₙ','o':'ₒ','p':'ₚ','r':'ᵣ','s':'ₛ','t':'ₜ','u':'ᵤ','v':'ᵥ','x':'ₓ'};
+                        return text.split('').map(c => map[c.toLowerCase()] || c).join('');
+                    }
+                },
+                {
+                    name: 'Superscript',
+                    tags: ['Minimalist'],
+                    transform: (text) => {
+                        const map = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','a':'ᵃ','b':'ᵇ','c':'ᶜ','d':'ᵈ','e':'ᵉ','f':'ᶠ','g':'ᵍ','h':'ʰ','i':'ⁱ','j':'ʲ','k':'ᵏ','l':'ˡ','m':'ᵐ','n':'ⁿ','o':'ᵒ','p':'ᵖ','r':'ʳ','s':'ˢ','t':'ᵗ','u':'ᵘ','v':'ᵛ','w':'ʷ','x':'ˣ','y':'ʸ','z':'ᶻ'};
+                        return text.split('').map(c => map[c.toLowerCase()] || c).join('');
+                    }
+                },
+                {
+                    name: 'Strikethrough',
+                    tags: ['Cute / Aesthetic'],
+                    transform: (text) => text.split('').map(c => c + '\u0336').join('')
+                },
+                {
+                    name: 'Underline',
+                    tags: ['Cute / Aesthetic'],
+                    transform: (text) => text.split('').map(c => c + '\u0332').join('')
+                }
+            ];
+
+            function renderGrid() {
+                grid.innerHTML = '';
+                const text = input.value || ' ';
+                
+                fonts.forEach(font => {
+                    if (currentFilter !== 'All' && !font.tags.includes(currentFilter)) return;
+                    
+                    const styledText = font.transform(text);
+                    
+                    const card = document.createElement('div');
+                    card.className = 'bg-cream rounded p-4 border border-warmGray-200 hover:border-cherry-600 transition-colors flex justify-between items-center group';
+                    
+                    const textContainer = document.createElement('div');
+                    textContainer.className = 'flex-grow min-w-0 pr-4 overflow-x-auto hide-scroll whitespace-nowrap';
+                    textContainer.innerHTML = `
+                        <div class="text-xs text-warmGray-400 mb-1 uppercase tracking-wider font-bold">${font.name}</div>
+                        <div class="text-xl text-charcoal">${styledText}</div>
+                    `;
+                    
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'flex-shrink-0 bg-white hover:bg-cherry-600 border border-warmGray-200 group-hover:border-cherry-600 text-charcoal hover:text-white p-2 rounded transition-colors';
+                    copyBtn.innerHTML = '<i data-lucide="copy" class="w-4 h-4"></i>';
+                    
+                    copyBtn.onclick = () => {
+                        const showToast = () => {
+                            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                            toast.classList.add('opacity-100', 'translate-y-0');
+                            setTimeout(() => {
+                                toast.classList.remove('opacity-100', 'translate-y-0');
+                                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                            }, 2000);
+                        };
+                        
+                        const fallbackCopy = () => {
+                            const textArea = document.createElement("textarea");
+                            textArea.value = styledText;
+                            textArea.style.position = "fixed";
+                            textArea.style.left = "-999999px";
+                            document.body.appendChild(textArea);
+                            textArea.focus();
+                            textArea.select();
+                            try {
+                                document.execCommand('copy');
+                                showToast();
+                            } catch (err) {
+                                console.error('Fallback copy failed', err);
+                            }
+                            document.body.removeChild(textArea);
+                        };
+
+                        if (navigator.clipboard && window.isSecureContext) {
+                            navigator.clipboard.writeText(styledText).then(showToast).catch(() => fallbackCopy());
+                        } else {
+                            fallbackCopy();
+                        }
+                    };
+                    
+                    card.appendChild(textContainer);
+                    card.appendChild(copyBtn);
+                    grid.appendChild(card);
+                });
+                lucide.createIcons();
+            }
+
+            input.addEventListener('input', renderGrid);
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-cherry-600', 'text-white', 'border-cherry-600');
+                        b.classList.add('bg-white', 'text-charcoal', 'border-warmGray-200');
+                    });
+                    const target = e.target;
+                    target.classList.remove('bg-white', 'text-charcoal', 'border-warmGray-200');
+                    target.classList.add('bg-cherry-600', 'text-white', 'border-cherry-600');
+                    
+                    currentFilter = target.getAttribute('data-filter');
+                    renderGrid();
+                });
+            });
+
+            // Initial render
+            renderGrid();
+        });
+    </script>
+</body>
+</html>

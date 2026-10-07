@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Carousel Splitter - Free Seamless Panorama Cropper | CherryChic</title>
+    <meta name="description" content="Split your panoramic photos into perfect, seamless swipeable carousels for Instagram. Choose 1:1 or 4:5 aspect ratio. Free, fast, and high quality.">
+    <link rel="canonical" href="https://cherrychic.in/carousel-splitter/" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#fcfbf9',
+                        charcoal: '#1a1a1a',
+                        cherry: { 100: '#fcebeb', 500: '#a63b51', 600: '#8c2a3e', 700: '#6b1f2e' },
+                        warmGray: { 200: '#e2e0dc', 300: '#d1cfcb', 400: '#a8a5a1' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="../global.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-cream text-charcoal font-sans antialiased flex flex-col min-h-screen">
+
+            <!-- Navbar -->
+    <nav class="w-full border-b border-warmGray-200 bg-white sticky top-0 z-50" id="navbar">
+        <div class="cc-container h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-cherry-600 rounded flex items-center justify-center text-white">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </div>
+                <span class="font-serif font-bold text-xl tracking-tight text-charcoal">CherryChic</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4">
+                    <i data-lucide="home" class="w-4 h-4"></i> Home
+                </a>
+                
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Video & Social <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/safe-zone-checker/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Safe Zone Checker</a>
+                        <a href="/caption-spacer/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Caption Spacer</a>
+                        <a href="/carousel-splitter/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Carousel Splitter</a>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Design & Typography <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/color-studio/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Color Extractor</a>
+                        <a href="/bio-font-styler/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Bio Font Styler</a>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Business & Legal <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/rate-calculator/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Rate Calculator</a>
+                        <a href="/legal-generator/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Legal Generator</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="cc-btn-primary hidden sm:inline-flex">Contact Us</a>
+                <button id="mobile-menu-btn" class="md:hidden text-charcoal">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+        <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-50 bg-white/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
+        <div class="p-4 flex justify-end">
+            <button id="mobile-close-btn" class="p-2 text-charcoal hover:text-cherry-600 bg-cream border border-warmGray-200 rounded">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col items-center gap-6 mt-8 text-lg font-bold overflow-y-auto pb-20">
+            <a href="/" class="text-charcoal hover:text-cherry-600 flex items-center gap-2"><i data-lucide="home" class="w-5 h-5"></i> Home</a>
+            
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Video & Social</h3>
+            <a href="/safe-zone-checker/" class="text-charcoal hover:text-cherry-600">Safe Zone Checker</a>
+            <a href="/caption-spacer/" class="text-charcoal hover:text-cherry-600">Caption Spacer</a>
+            <a href="/carousel-splitter/" class="text-charcoal hover:text-cherry-600">Carousel Splitter</a>
+
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Design & Typography</h3>
+            <a href="/color-studio/" class="text-charcoal hover:text-cherry-600">Color Extractor</a>
+            <a href="/bio-font-styler/" class="text-charcoal hover:text-cherry-600">Bio Font Styler</a>
+            
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Business & Legal</h3>
+            <a href="/rate-calculator/" class="text-charcoal hover:text-cherry-600">Rate Calculator</a>
+            <a href="/legal-generator/" class="text-charcoal hover:text-cherry-600">Legal Generator</a>
+            
+            <div class="w-16 h-px bg-warmGray-200 my-4"></div>
+            <a href="/contact.html" class="text-charcoal hover:text-cherry-600">Contact Us</a>
+        </nav>
+    </div>
+
+    <!-- Main Tool Section -->
+    <main class="flex-grow pb-20 pt-10">
+        <div class="cc-container max-w-5xl">
+            
+            <!-- Breadcrumb -->
+            <div class="text-sm text-warmGray-400 mb-6 flex items-center gap-2">
+                <a href="/" class="hover:text-cherry-600">Home</a>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <a href="/#tools" class="hover:text-cherry-600">Video & Social</a>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <span class="text-charcoal font-medium">Carousel Splitter</span>
+            </div>
+
+            <!-- Tool Header -->
+            <div class="mb-10 text-center md:text-left">
+                <span class="cc-eyebrow mb-2 block">Video & Social Tools</span>
+                <h1 class="cc-h1 mb-4">Instagram Carousel Splitter</h1>
+                <p class="cc-body-large text-warmGray-400 max-w-2xl">Transform any wide photo into a beautiful, seamless swipeable carousel for Instagram.</p>
+            </div>
+
+            <!-- Main Tool Area -->
+            <div class="cc-card bg-white mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Controls Sidebar -->
+                    <div class="md:col-span-1 space-y-6">
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal mb-2">Aspect Ratio</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button type="button" class="aspect-btn bg-cherry-600 text-white py-2 rounded border border-cherry-600 text-xs font-medium transition-colors" data-ratio="4:5">
+                                    Portrait (4:5)
+                                </button>
+                                <button type="button" class="aspect-btn bg-white text-charcoal py-2 rounded border border-warmGray-200 hover:bg-cream text-xs font-medium transition-colors" data-ratio="1:1">
+                                    Square (1:1)
+                                </button>
+                                <button type="button" class="aspect-btn bg-white text-charcoal py-2 rounded border border-warmGray-200 hover:bg-cream text-xs font-medium transition-colors" data-ratio="free">
+                                    Free Split
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal mb-2">Number of Slides</label>
+                            <input type="range" id="slides-slider" min="2" max="6" value="3" class="w-full h-2 bg-warmGray-200 rounded-lg appearance-none cursor-pointer accent-cherry-600">
+                            <div class="flex justify-between text-xs text-warmGray-400 mt-1">
+                                <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+                            </div>
+                            <div class="mt-2 text-center text-cherry-600 font-bold text-lg"><span id="slides-count">3</span> Slides</div>
+                        </div>
+
+                        <div class="pt-4 border-t border-warmGray-200">
+                            <button id="download-zip" class="w-full cc-btn-primary py-3 rounded disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2" disabled>
+                                <i data-lucide="download" class="w-5 h-5"></i>
+                                Download All as ZIP
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Upload & Preview Area -->
+                    <div class="md:col-span-2">
+                        <!-- Dropzone -->
+                        <div id="drop-zone" class="border-2 border-dashed border-warmGray-300 rounded bg-cream hover:bg-warmGray-200/50 transition-colors flex flex-col items-center justify-center p-12 text-center cursor-pointer h-full relative overflow-hidden group">
+                            <input type="file" id="file-input" accept="image/jpeg, image/png, image/webp" class="hidden">
+                            <i data-lucide="image-plus" class="w-12 h-12 text-warmGray-400 mb-4 group-hover:text-cherry-600 transition-colors"></i>
+                            <p class="text-lg font-bold text-charcoal mb-1">Click or drag image to upload</p>
+                            <p class="text-sm text-warmGray-400">Supports JPG, PNG, WEBP</p>
+                        </div>
+
+                        <!-- Preview Area (Hidden initially) -->
+                        <div id="preview-area" class="hidden">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-bold text-charcoal">Preview</h3>
+                                <button id="change-image" class="text-sm font-medium text-cherry-600 hover:text-cherry-700">Change Image</button>
+                            </div>
+                            
+                            <!-- Container for sliced images -->
+                            <div class="w-full overflow-x-auto hide-scroll bg-cream rounded p-4 border border-warmGray-200 relative">
+                                <div id="slices-container" class="flex gap-1 min-w-max mx-auto h-[350px]">
+                                    <!-- Slices injected here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad Placeholder -->
+            <div class="w-full flex justify-center mb-16">
+                <div class="w-full max-w-[728px] h-[90px] bg-cream border border-warmGray-200 rounded flex items-center justify-center text-warmGray-400 text-sm italic">
+                    Advertisement Placeholder
+                </div>
+            </div>
+
+            <!-- SEO Content & FAQ -->
+            <article class="prose prose-slate max-w-none">
+                <h2 class="cc-h2 mb-4">How to Create Seamless Instagram Carousels</h2>
+                <p class="cc-body mb-4">Creating a seamless Instagram carousel is one of the most effective ways to tell a story, showcase a panoramic landscape, or share a detailed tutorial on social media. By splitting a single ultra-wide image into multiple square or portrait tiles, users can swipe through your post smoothly, mimicking a continuous canvas. Not only does this encourage users to spend more time on your post (which boosts your algorithm ranking), but it also provides a highly aesthetic visual experience.</p>
+                
+                <p class="cc-body mb-8">With our free Instagram Carousel Splitter, you don't need expensive software like Photoshop. Our tool uses HTML5 Canvas to precisely slice your images without any quality loss, directly in your browser. Since everything happens locally on your device, your images are never uploaded to a server, ensuring 100% privacy and lightning-fast processing speeds.</p>
+                
+                <h3 class="cc-h3 mb-3">Recommended Image Dimensions</h3>
+                <p class="cc-body mb-4">To get the best results, you need to prepare your base image with the correct aspect ratio. Instagram supports two primary formats for carousels: Square (1:1) and Portrait (4:5). Portrait is highly recommended because it takes up more vertical screen space, giving your content more visibility on the timeline.</p>
+                
+                <ul class="list-disc pl-5 space-y-2 mb-10 cc-body">
+                    <li><strong>Square (1:1):</strong> Each slide should be 1080x1080 pixels. If you want a 3-slide carousel, your starting panoramic image should be 3240x1080 pixels.</li>
+                    <li><strong>Portrait (4:5):</strong> Each slide should be 1080x1350 pixels. For a 3-slide carousel, your panoramic image needs to be exactly 3240x1350 pixels.</li>
+                </ul>
+
+                <h3 class="cc-h3 mb-4">Frequently Asked Questions</h3>
+                <div class="space-y-4">
+                    <details class="bg-cream rounded-lg border border-warmGray-200 p-4 cursor-pointer group">
+                        <summary class="font-medium text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center">
+                            Does this tool reduce the image quality?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform group-open:rotate-180 text-cherry-600"></i>
+                        </summary>
+                        <p class="mt-3 text-warmGray-400 text-sm leading-relaxed">No, our splitter maintains the original resolution of your image. If your image perfectly matches the calculated dimensions, it will be sliced exactly pixel-for-pixel. We export the resulting slides in high-quality PNG format to prevent any compression artifacts.</p>
+                    </details>
+                    
+                    <details class="bg-cream rounded-lg border border-warmGray-200 p-4 cursor-pointer group">
+                        <summary class="font-medium text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center">
+                            Are my photos uploaded to a server?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform group-open:rotate-180 text-cherry-600"></i>
+                        </summary>
+                        <p class="mt-3 text-warmGray-400 text-sm leading-relaxed">Absolutely not. The cropping and processing happen entirely within your web browser using JavaScript and HTML5 Canvas technologies. Your photos never leave your device.</p>
+                    </details>
+                    
+                    <details class="bg-cream rounded-lg border border-warmGray-200 p-4 cursor-pointer group">
+                        <summary class="font-medium text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center">
+                            Why are there gaps when I post to Instagram?
+                            <i data-lucide="chevron-down" class="w-4 h-4 transform transition-transform group-open:rotate-180 text-cherry-600"></i>
+                        </summary>
+                        <p class="mt-3 text-warmGray-400 text-sm leading-relaxed">If you notice tiny gaps while previewing your post on the Instagram draft screen, don't worry! This is a known UI bug in the Instagram app preview. Once you actually publish the post, the slides will align perfectly seamless without any gaps.</p>
+                    </details>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-white border-t border-warmGray-200 mt-auto">
+        <div class="cc-container grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-1">
+                <a href="/" class="flex items-center gap-2 mb-4">
+                    <div class="w-6 h-6 bg-cherry-600 rounded flex items-center justify-center text-white">
+                        <i data-lucide="sparkles" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-serif font-bold text-lg tracking-tight text-charcoal">CherryChic</span>
+                </a>
+                <p class="text-sm text-warmGray-400">Tools for modern creators.</p>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Popular Tools</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/safe-zone-checker/" class="text-warmGray-400 hover:text-cherry-600">Safe Zone Checker</a></li>
+                    <li><a href="/rate-calculator/" class="text-warmGray-400 hover:text-cherry-600">Rate Calculator</a></li>
+                    <li><a href="/color-studio/" class="text-warmGray-400 hover:text-cherry-600">Color Extractor</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/privacy-policy.html" class="text-warmGray-400 hover:text-cherry-600">Privacy Policy</a></li>
+                    <li><a href="/terms.html" class="text-warmGray-400 hover:text-cherry-600">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/contact.html" class="text-warmGray-400 hover:text-cherry-600">Get in Touch</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="cc-container mt-12 pt-8 border-t border-warmGray-200 text-sm text-warmGray-400 flex flex-col sm:flex-row items-center justify-between">
+            <p>&copy; 2026 CherryChic. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+            const previewArea = document.getElementById('preview-area');
+            const slicesContainer = document.getElementById('slices-container');
+            const changeImageBtn = document.getElementById('change-image');
+            
+            const aspectBtns = document.querySelectorAll('.aspect-btn');
+            const slidesSlider = document.getElementById('slides-slider');
+            const slidesCount = document.getElementById('slides-count');
+            const downloadZipBtn = document.getElementById('download-zip');
+
+            let currentImage = null;
+            let targetRatio = 4 / 5; // default 4:5
+            let numSlides = 3;
+            let currentSlicesData = [];
+
+            // Aspect Ratio Toggles
+            aspectBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    aspectBtns.forEach(b => {
+                        b.classList.remove('bg-cherry-600', 'text-white', 'border-cherry-600');
+                        b.classList.add('bg-white', 'text-charcoal', 'border-warmGray-200');
+                    });
+                    const target = e.target;
+                    target.classList.remove('bg-white', 'text-charcoal', 'border-warmGray-200');
+                    target.classList.add('bg-cherry-600', 'text-white', 'border-cherry-600');
+                    
+                    const ratio = target.getAttribute('data-ratio');
+                    if (ratio === '4:5') targetRatio = 4/5;
+                    else if (ratio === '1:1') targetRatio = 1/1;
+                    else targetRatio = 'free';
+                    
+                    if (currentImage) processImage();
+                });
+            });
+
+            // Slides Slider
+            slidesSlider.addEventListener('input', (e) => {
+                numSlides = parseInt(e.target.value);
+                slidesCount.textContent = numSlides;
+                if (currentImage) processImage();
+            });
+
+            // File Upload Handling
+            dropZone.addEventListener('click', () => fileInput.click());
+            
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-cherry-600', 'bg-warmGray-200/50');
+            });
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-cherry-600', 'bg-warmGray-200/50');
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-cherry-600', 'bg-warmGray-200/50');
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+
+            changeImageBtn.addEventListener('click', () => {
+                currentImage = null;
+                fileInput.value = '';
+                previewArea.classList.add('hidden');
+                dropZone.classList.remove('hidden');
+                downloadZipBtn.disabled = true;
+            });
+
+            function handleFile(file) {
+                if (!file.type.match('image.*')) {
+                    alert('Please upload an image file (JPG, PNG).');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        currentImage = img;
+                        dropZone.classList.add('hidden');
+                        previewArea.classList.remove('hidden');
+                        processImage();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function processImage() {
+                if (!currentImage) return;
+
+                slicesContainer.innerHTML = '';
+                currentSlicesData = [];
+                
+                const imgW = currentImage.width;
+                const imgH = currentImage.height;
+                const imgRatio = imgW / imgH;
+                let cropW, cropH, cropX, cropY;
+
+                if (targetRatio === 'free') {
+                    cropW = imgW;
+                    cropH = imgH;
+                    cropX = 0;
+                    cropY = 0;
+                } else {
+                    const desiredRatio = numSlides * targetRatio;
+                    
+                    if (imgRatio > desiredRatio) {
+                        cropH = imgH;
+                        cropW = imgH * desiredRatio;
+                        cropY = 0;
+                        cropX = (imgW - cropW) / 2;
+                    } else {
+                        cropW = imgW;
+                        cropH = imgW / desiredRatio;
+                        cropX = 0;
+                        cropY = (imgH - cropH) / 2;
+                    }
+                }
+
+                const sliceW = cropW / numSlides;
+                const sliceH = cropH;
+
+                const canvas = document.createElement('canvas');
+                canvas.width = sliceW;
+                canvas.height = sliceH;
+                const ctx = canvas.getContext('2d');
+
+                for (let i = 0; i < numSlides; i++) {
+                    ctx.clearRect(0, 0, sliceW, sliceH);
+                    ctx.drawImage(
+                        currentImage,
+                        cropX + (i * sliceW), cropY, sliceW, sliceH,
+                        0, 0, sliceW, sliceH
+                    );
+
+                    const dataUrl = canvas.toDataURL('image/png');
+                    currentSlicesData.push(dataUrl);
+
+                    const sliceDiv = document.createElement('div');
+                    sliceDiv.className = 'relative group shrink-0 h-full';
+                    
+                    const sliceImg = document.createElement('img');
+                    sliceImg.src = dataUrl;
+                    sliceImg.className = 'h-full object-contain block border border-warmGray-200';
+                    
+                    const dlBtn = document.createElement('button');
+                    dlBtn.className = 'absolute bottom-2 right-2 bg-charcoal/80 hover:bg-cherry-600 text-white p-2 rounded opacity-0 group-hover:opacity-100 transition-all';
+                    dlBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>';
+                    
+                    dlBtn.onclick = () => {
+                        saveAs(dataUrl, `slide_${i + 1}.png`);
+                    };
+
+                    sliceDiv.appendChild(sliceImg);
+                    sliceDiv.appendChild(dlBtn);
+                    slicesContainer.appendChild(sliceDiv);
+                }
+
+                downloadZipBtn.disabled = false;
+            }
+
+            downloadZipBtn.addEventListener('click', () => {
+                if (currentSlicesData.length === 0) return;
+                
+                downloadZipBtn.disabled = true;
+                const originalText = downloadZipBtn.innerHTML;
+                downloadZipBtn.innerHTML = '<svg class="animate-spin w-5 h-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Zipping...';
+
+                const zip = new JSZip();
+                const folder = zip.folder("cherrychic_carousel");
+                
+                currentSlicesData.forEach((dataUrl, i) => {
+                    const base64Data = dataUrl.replace(/^data:image\/png;base64,/, "");
+                    folder.file(`slide_${i + 1}.png`, base64Data, {base64: true});
+                });
+
+                zip.generateAsync({type:"blob"}).then(function(content) {
+                    saveAs(content, "carousel_slides.zip");
+                    downloadZipBtn.disabled = false;
+                    downloadZipBtn.innerHTML = originalText;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

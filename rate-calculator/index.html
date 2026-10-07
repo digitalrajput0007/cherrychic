@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsorship Rate Calculator | CherryChic</title>
+    <meta name="description" content="Calculate your fair brand deal rates, sponsorship prices, and usage fees. Generate professional pitch emails instantly.">
+    <link rel="canonical" href="https://cherrychic.in/rate-calculator/" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#fcfbf9',
+                        charcoal: '#1a1a1a',
+                        cherry: { 100: '#fcebeb', 500: '#a63b51', 600: '#8c2a3e', 700: '#6b1f2e' },
+                        warmGray: { 200: '#e2e0dc', 300: '#d1cfcb', 400: '#a8a5a1' }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="../global.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #fcfbf9; }
+        ::-webkit-scrollbar-thumb { background: #e2e0dc; border-radius: 4px; }
+        
+        /* Custom Range Slider */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 24px; width: 24px; border-radius: 50%; background: #8c2a3e; cursor: pointer; margin-top: -10px; box-shadow: 0 0 10px rgba(140,42,62,0.3); }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: #e2e0dc; border-radius: 3px; }
+        input[type=range]:focus { outline: none; }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked { right: 0; border-color: #8c2a3e; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #8c2a3e; }
+        
+        #modal-overlay { transition: opacity 0.3s; opacity: 0; pointer-events: none; }
+        #modal-overlay.show { opacity: 1; pointer-events: auto; }
+        #modal-content { transition: transform 0.3s; transform: scale(0.95) translateY(20px); }
+        #modal-overlay.show #modal-content { transform: scale(1) translateY(0); }
+    </style>
+</head>
+<body class="bg-cream text-charcoal font-sans antialiased flex flex-col min-h-screen">
+
+            <!-- Navbar -->
+    <nav class="w-full border-b border-warmGray-200 bg-white sticky top-0 z-50" id="navbar">
+        <div class="cc-container h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-cherry-600 rounded flex items-center justify-center text-white">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                </div>
+                <span class="font-serif font-bold text-xl tracking-tight text-charcoal">CherryChic</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4">
+                    <i data-lucide="home" class="w-4 h-4"></i> Home
+                </a>
+                
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Video & Social <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/safe-zone-checker/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Safe Zone Checker</a>
+                        <a href="/caption-spacer/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Caption Spacer</a>
+                        <a href="/carousel-splitter/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Carousel Splitter</a>
+                    </div>
+                </div>
+                
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Design & Typography <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/color-studio/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Color Extractor</a>
+                        <a href="/bio-font-styler/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Bio Font Styler</a>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button class="text-sm font-medium text-charcoal hover:text-cherry-600 transition-colors flex items-center gap-1 py-4 outline-none">
+                        Business & Legal <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                    </button>
+                    <div class="absolute left-0 top-full mt-0 w-48 bg-white border border-warmGray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+                        <a href="/rate-calculator/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Rate Calculator</a>
+                        <a href="/legal-generator/" class="px-4 py-2 text-sm text-charcoal hover:bg-cream hover:text-cherry-600">Legal Generator</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="/contact.html" class="cc-btn-primary hidden sm:inline-flex">Contact Us</a>
+                <button id="mobile-menu-btn" class="md:hidden text-charcoal">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+            <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="fixed inset-0 z-50 bg-white/95 backdrop-blur-xl transform translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
+        <div class="p-4 flex justify-end">
+            <button id="mobile-close-btn" class="p-2 text-charcoal hover:text-cherry-600 bg-cream border border-warmGray-200 rounded">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col items-center gap-6 mt-8 text-lg font-bold overflow-y-auto pb-20">
+            <a href="/" class="text-charcoal hover:text-cherry-600 flex items-center gap-2"><i data-lucide="home" class="w-5 h-5"></i> Home</a>
+            
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Video & Social</h3>
+            <a href="/safe-zone-checker/" class="text-charcoal hover:text-cherry-600">Safe Zone Checker</a>
+            <a href="/caption-spacer/" class="text-charcoal hover:text-cherry-600">Caption Spacer</a>
+            <a href="/carousel-splitter/" class="text-charcoal hover:text-cherry-600">Carousel Splitter</a>
+
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Design & Typography</h3>
+            <a href="/color-studio/" class="text-charcoal hover:text-cherry-600">Color Extractor</a>
+            <a href="/bio-font-styler/" class="text-charcoal hover:text-cherry-600">Bio Font Styler</a>
+            
+            <h3 class="text-cherry-600 text-sm uppercase tracking-widest font-bold mt-4">Business & Legal</h3>
+            <a href="/rate-calculator/" class="text-charcoal hover:text-cherry-600">Rate Calculator</a>
+            <a href="/legal-generator/" class="text-charcoal hover:text-cherry-600">Legal Generator</a>
+            
+            <div class="w-16 h-px bg-warmGray-200 my-4"></div>
+            <a href="/contact.html" class="text-charcoal hover:text-cherry-600">Contact Us</a>
+        </nav>
+    </div>
+
+    <!-- Main Tool Section -->
+    <main class="flex-grow pb-20 pt-10">
+        <div class="cc-container max-w-7xl">
+            
+            <!-- Breadcrumb -->
+            <div class="text-sm text-warmGray-400 mb-6 flex items-center gap-2">
+                <a href="/" class="hover:text-cherry-600">Home</a>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <a href="/#tools" class="hover:text-cherry-600">Business</a>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <span class="text-charcoal font-medium">Rate Calculator</span>
+            </div>
+
+            <!-- Tool Header -->
+            <div class="mb-10 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cherry-100 border border-cherry-600 text-cherry-600 text-sm font-bold mb-6">
+                    <i data-lucide="dollar-sign" class="w-4 h-4"></i> Get Paid Fairly
+                </div>
+                <h1 class="cc-h1 mb-4">Sponsorship Rate Calculator</h1>
+                <p class="cc-body-large text-warmGray-400 max-w-2xl">Stop guessing your worth. Calculate data-driven rates for brand deals based on your following, engagement, niche, and usage rights.</p>
+            </div>
+
+            <!-- Responsive Ad Unit Placeholder -->
+            <div class="w-full flex justify-center mb-12">
+                <div class="w-full max-w-[728px] h-[90px] bg-cream border border-warmGray-200 rounded flex items-center justify-center text-warmGray-400 text-sm italic relative overflow-hidden">
+                    Advertisement Placeholder
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-8 items-start mb-16">
+                
+                <!-- Inputs Panel (Left) -->
+                <div class="flex flex-col space-y-6">
+                    <div class="cc-card p-6 md:p-8 border border-warmGray-200">
+                        <h2 class="text-xl font-serif font-bold text-charcoal mb-6 border-b border-warmGray-200 pb-4">Audience Metrics</h2>
+                        
+                        <!-- Followers Slider -->
+                        <div class="mb-8">
+                            <div class="flex justify-between items-end mb-4">
+                                <label class="text-sm font-bold text-charcoal">Total Followers</label>
+                                <input type="text" id="val-followers" class="text-2xl font-sans font-bold text-charcoal bg-transparent text-right w-48 sm:w-56 border-b-2 border-transparent hover:border-warmGray-200 focus:border-cherry-600 focus:outline-none transition-colors pb-1" value="50,000">
+                            </div>
+                            <input type="range" id="slider-followers" min="1000" max="1000000" step="1000" value="50000">
+                        </div>
+                        
+                        <!-- Views Slider -->
+                        <div class="mb-8">
+                            <div class="flex justify-between items-end mb-4">
+                                <label class="text-sm font-bold text-charcoal">Avg. Views per Reel/Video</label>
+                                <input type="text" id="val-views" class="text-2xl font-sans font-bold text-charcoal bg-transparent text-right w-48 sm:w-56 border-b-2 border-transparent hover:border-warmGray-200 focus:border-cherry-600 focus:outline-none transition-colors pb-1" value="20,000">
+                            </div>
+                            <input type="range" id="slider-views" min="500" max="500000" step="500" value="20000">
+                        </div>
+                        
+                        <h2 class="text-xl font-serif font-bold text-charcoal mb-6 border-b border-warmGray-200 pb-4 pt-4">Campaign Details</h2>
+                        
+                        <!-- Niche -->
+                        <div class="mb-8">
+                            <label class="block text-sm font-bold text-charcoal mb-3">Your Niche</label>
+                            <div class="relative">
+                                <select id="input-niche" class="w-full bg-cream border border-warmGray-200 text-charcoal rounded px-4 py-3 appearance-none focus:outline-none focus:border-cherry-600">
+                                    <option value="1.0">Lifestyle & General</option>
+                                    <option value="1.2">Beauty & Fashion</option>
+                                    <option value="1.3">Tech & Finance</option>
+                                    <option value="1.1">Gaming & Esports</option>
+                                    <option value="0.9">Comedy & Entertainment</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                                    <i data-lucide="chevron-down" class="w-5 h-5 text-warmGray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deliverables -->
+                        <div class="mb-8">
+                            <label class="block text-sm font-bold text-charcoal mb-3">Deliverables Required</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-3 p-4 border border-cherry-600 bg-cherry-100 rounded cursor-pointer transition-colors" id="label-ig">
+                                    <input type="checkbox" id="chk-ig" class="w-5 h-5 rounded border-warmGray-300 text-cherry-600 focus:ring-cherry-600 bg-white" checked>
+                                    <span class="text-sm font-bold text-charcoal">1x Instagram Reel</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-4 border border-warmGray-200 bg-white rounded cursor-pointer transition-colors" id="label-story">
+                                    <input type="checkbox" id="chk-story" class="w-5 h-5 rounded border-warmGray-300 text-cherry-600 focus:ring-cherry-600 bg-white">
+                                    <span class="text-sm font-bold text-warmGray-400">3x Stories w/ Link</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-4 border border-warmGray-200 bg-white rounded cursor-pointer transition-colors" id="label-tk">
+                                    <input type="checkbox" id="chk-tk" class="w-5 h-5 rounded border-warmGray-300 text-cherry-600 focus:ring-cherry-600 bg-white">
+                                    <span class="text-sm font-bold text-warmGray-400">1x TikTok Video</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-4 border border-warmGray-200 bg-white rounded cursor-pointer transition-colors" id="label-yt">
+                                    <input type="checkbox" id="chk-yt" class="w-5 h-5 rounded border-warmGray-300 text-cherry-600 focus:ring-cherry-600 bg-white">
+                                    <span class="text-sm font-bold text-warmGray-400">1x YouTube Short</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Usage Rights Toggle -->
+                        <div class="flex items-center justify-between p-5 border border-cherry-600/30 bg-cherry-100 rounded">
+                            <div>
+                                <h3 class="font-bold text-charcoal text-sm">30-Day Paid Whitelisting</h3>
+                                <p class="text-xs text-warmGray-400 mt-1">Brand can run ads through your handle (+30%)</p>
+                            </div>
+                            <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-whitelisting" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 border-warmGray-300 appearance-none cursor-pointer z-10 transition-all"/>
+                                <label for="toggle-whitelisting" class="toggle-label block overflow-hidden h-6 rounded-full bg-warmGray-300 cursor-pointer"></label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Output Panel (Right) -->
+                <div class="flex flex-col space-y-6 lg:sticky lg:top-28">
+                    <div class="cc-card p-8 border border-warmGray-200 border-t-4 border-t-cherry-600">
+                        <h2 class="text-sm font-bold text-warmGray-400 uppercase tracking-widest mb-8">Estimated Value</h2>
+                        
+                        <div class="flex flex-col gap-6 mb-8">
+                            <!-- Recommended Ask -->
+                            <div class="p-6 bg-cherry-100 border border-cherry-600/20 rounded">
+                                <p class="text-sm text-cherry-700 font-bold mb-1">Recommended Ask</p>
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl text-charcoal font-bold">$</span>
+                                    <span class="text-5xl font-sans font-bold text-charcoal tracking-tight" id="out-recommended">1,250</span>
+                                </div>
+                                <p class="text-xs text-warmGray-500 mt-2">Target rate for standard negotiations.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Baseline -->
+                                <div class="p-4 bg-cream border border-warmGray-200 rounded">
+                                    <p class="text-xs text-warmGray-400 font-bold mb-1">Baseline (Floor Price)</p>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-lg text-charcoal font-bold">$</span>
+                                        <span class="text-2xl font-sans font-bold text-charcoal tracking-tight" id="out-baseline">950</span>
+                                    </div>
+                                </div>
+                                <!-- Aggressive -->
+                                <div class="p-4 bg-cream border border-warmGray-200 rounded">
+                                    <p class="text-xs text-warmGray-400 font-bold mb-1">Corporate Pitch</p>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-lg text-green-600 font-bold">$</span>
+                                        <span class="text-2xl font-sans font-bold text-green-600 tracking-tight" id="out-aggressive">1,875</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="btn-generate-pitch" class="cc-btn-primary w-full justify-center">
+                            <i data-lucide="mail" class="w-5 h-5"></i> Generate Pitch Email
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Responsive Ad Unit Placeholder -->
+            <div class="w-full flex justify-center mb-16">
+                <div class="w-full max-w-[970px] h-[90px] bg-cream border border-warmGray-200 rounded flex items-center justify-center text-warmGray-400 text-sm italic relative overflow-hidden">
+                    Advertisement Placeholder
+                </div>
+            </div>
+
+            <!-- SEO Editorial Content & FAQ -->
+            <article class="cc-card p-8 md:p-12 border border-warmGray-200 prose prose-slate max-w-none">
+                <h2 class="cc-h2 mb-6">How Much Should Influencers Charge in 2026?</h2>
+                <p class="cc-body">Setting your rate for brand sponsorships can be stressful. The industry standard has shifted away from simply pricing based on follower count. Brands now heavily prioritize average video views, engagement rate, and niche authority.</p>
+
+                <h3 class="text-xl font-bold mt-8 mb-4 text-charcoal">Influencer Niche CPM Cheat Sheet</h3>
+                <div class="overflow-x-auto mb-8 rounded border border-warmGray-200">
+                    <table class="w-full text-left border-collapse m-0 bg-white">
+                        <thead>
+                            <tr class="bg-cream border-b border-warmGray-200 text-charcoal">
+                                <th class="p-4 font-bold border-r border-warmGray-200">Content Niche</th>
+                                <th class="p-4 font-bold border-r border-warmGray-200">Average CPM ($)</th>
+                                <th class="p-4 font-bold">Monetization Multiplier</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-charcoal cc-body divide-y divide-warmGray-200">
+                            <tr>
+                                <td class="p-4 font-bold border-r border-warmGray-200 text-cherry-600">Finance & B2B Tech</td>
+                                <td class="p-4 border-r border-warmGray-200">$35 - $60 CPM</td>
+                                <td class="p-4">1.5x Base Rate</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold border-r border-warmGray-200 text-cherry-600">Beauty & Fashion</td>
+                                <td class="p-4 border-r border-warmGray-200">$20 - $35 CPM</td>
+                                <td class="p-4">1.2x Base Rate</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold border-r border-warmGray-200 text-cherry-600">Lifestyle & Travel</td>
+                                <td class="p-4 border-r border-warmGray-200">$15 - $25 CPM</td>
+                                <td class="p-4">1.0x Base Rate</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold border-r border-warmGray-200 text-cherry-600">Comedy & Memes</td>
+                                <td class="p-4 border-r border-warmGray-200">$5 - $15 CPM</td>
+                                <td class="p-4">0.8x Base Rate</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Responsive Ad Unit Placeholder -->
+                <div class="my-8 w-full max-w-[728px] mx-auto h-[90px] bg-cream border border-warmGray-200 rounded flex items-center justify-center text-warmGray-400 text-sm italic relative overflow-hidden">
+                    Advertisement Placeholder
+                </div>
+
+                <h3 class="text-xl font-bold mt-8 mb-4 text-charcoal">Formula for Calculating Engagement Rate and CPM</h3>
+                <p class="cc-body">The standard baseline calculation many agencies use in 2026 relies on a blended CPM (Cost Per Mille / thousand views) plus a flat production fee:</p>
+                <ul class="cc-body">
+                    <li><strong>Base Production Fee:</strong> Approximately $100 per 10,000 followers. This covers your time conceptualizing, filming, and editing.</li>
+                    <li><strong>Viewership CPM:</strong> $20 to $30 per 1,000 average views. Video views are the true indicator of reach. Brands don't care if you have 1 million followers if your videos only average 5,000 views.</li>
+                    <li><strong>Rights Multipliers:</strong> Organic posting is the baseline. If a brand requests Paid Whitelisting (the ability to run your post as an ad), you must charge a premium of +20% to +50% for 30 days of usage.</li>
+                </ul>
+
+                <h3 class="text-xl font-bold mt-8 mb-4 text-charcoal">Why Niche Dictates Your Pitch Strategy</h3>
+                <p class="cc-body">As illustrated in the cheat sheet above, all audiences are not created equal in the eyes of advertisers. A creator reviewing enterprise SaaS software or personal finance tools has an audience primed for high-ticket conversions. A software company is willing to pay a $50 CPM because a single customer might be worth $2,000 in Lifetime Value (LTV).</p>
+                <p class="cc-body">Conversely, a prank or comedy channel might have 10x the views but a fraction of the purchasing intent. When using our Rate Calculator, always select your primary niche to ensure your baseline and aggressive pitch recommendations are properly weighted.</p>
+
+                <h3 class="text-xl font-bold mt-8 mb-4 text-charcoal">Handling Exclusivity and Whitelisting Demands</h3>
+                <p class="cc-body">The most common mistake new creators make is granting unlimited usage rights in perpetuity. Never sign a contract that allows the brand "in perpetuity" usage for a flat fee. Always cap usage rights at 30, 60, or 90 days. If a brand wants to continue running your face in their Facebook ads after 30 days, they must pay a renewal fee (typically 10-15% of the original contract value per month).</p>
+
+                <!-- FAQ Accordion -->
+                <h3 class="cc-h2 mt-12 mb-6">Frequently Asked Questions</h3>
+                <div class="space-y-4 not-prose">
+                    <details class="bg-cream rounded border border-warmGray-200 p-6 cursor-pointer group transition-all duration-300">
+                        <summary class="font-bold text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center text-lg">
+                            What is Paid Whitelisting / Ad Boosting?
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-cherry-600 transform transition-transform duration-300 group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-4 text-warmGray-400 text-sm leading-relaxed">Whitelisting gives a brand permission to run paid ads through your handle. Since this extends the reach and lifecycle of the post, you should always charge an additional 20-30% on top of your base rate for 30 days of usage.</p>
+                    </details>
+                    
+                    <details class="bg-cream rounded border border-warmGray-200 p-6 cursor-pointer group transition-all duration-300">
+                        <summary class="font-bold text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center text-lg">
+                            Should I charge more for specific niches?
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-cherry-600 transform transition-transform duration-300 group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-4 text-warmGray-400 text-sm leading-relaxed">Yes. Highly targeted niches like Finance, Tech, and B2B software command higher CPMs because the audience is more likely to make high-value purchases. Broad niches like Comedy or general Lifestyle typically command slightly lower CPMs.</p>
+                    </details>
+                    
+                    <details class="bg-cream rounded border border-warmGray-200 p-6 cursor-pointer group transition-all duration-300">
+                        <summary class="font-bold text-charcoal group-hover:text-cherry-600 transition-colors outline-none list-none flex justify-between items-center text-lg">
+                            What if a brand asks for exclusivity?
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-cherry-600 transform transition-transform duration-300 group-open:rotate-180"></i>
+                        </summary>
+                        <p class="mt-4 text-warmGray-400 text-sm leading-relaxed">If a brand prevents you from working with their competitors for a set duration (e.g., 3 months), you are losing potential income. You should add a 30% to 50% exclusivity fee on top of your final rate.</p>
+                    </details>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-white border-t border-warmGray-200 mt-auto">
+        <div class="cc-container grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-1">
+                <a href="/" class="flex items-center gap-2 mb-4">
+                    <div class="w-6 h-6 bg-cherry-600 rounded flex items-center justify-center text-white">
+                        <i data-lucide="sparkles" class="w-3 h-3"></i>
+                    </div>
+                    <span class="font-serif font-bold text-lg tracking-tight text-charcoal">CherryChic</span>
+                </a>
+                <p class="text-sm text-warmGray-400">Tools for modern creators.</p>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Popular Tools</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/safe-zone-checker/" class="text-warmGray-400 hover:text-cherry-600">Safe Zone Checker</a></li>
+                    <li><a href="/rate-calculator/" class="text-warmGray-400 hover:text-cherry-600">Rate Calculator</a></li>
+                    <li><a href="/color-studio/" class="text-warmGray-400 hover:text-cherry-600">Color Extractor</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/privacy-policy.html" class="text-warmGray-400 hover:text-cherry-600">Privacy Policy</a></li>
+                    <li><a href="/terms.html" class="text-warmGray-400 hover:text-cherry-600">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-charcoal mb-4">Contact</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="/contact.html" class="text-warmGray-400 hover:text-cherry-600">Get in Touch</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="cc-container mt-12 pt-8 border-t border-warmGray-200 text-sm text-warmGray-400 flex flex-col sm:flex-row items-center justify-between">
+            <p>&copy; 2026 CherryChic. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Pitch Modal -->
+    <div id="modal-overlay" class="fixed inset-0 bg-charcoal/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div id="modal-content" class="bg-white border border-warmGray-200 w-full max-w-2xl rounded overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-warmGray-200 flex justify-between items-center bg-cream">
+                <h3 class="font-serif font-bold text-xl text-charcoal">Your Pitch Draft</h3>
+                <button id="close-modal" class="text-warmGray-400 hover:text-cherry-600 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto bg-white">
+                <div class="relative group">
+                    <textarea id="pitch-text" class="w-full h-64 bg-cream border border-warmGray-200 rounded p-4 text-charcoal text-sm font-sans focus:outline-none focus:border-cherry-600 leading-relaxed resize-none" readonly></textarea>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button id="btn-copy-pitch" class="flex items-center gap-2 bg-charcoal hover:bg-cherry-600 text-white font-bold py-3 px-6 rounded transition-colors">
+                        <i data-lucide="copy" class="w-4 h-4"></i> Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-charcoal text-white px-6 py-3 rounded shadow-2xl border border-charcoal flex items-center gap-2 z-50 opacity-0 pointer-events-none transition-all duration-300 translate-y-8 font-bold">
+        <i data-lucide="check-circle" class="w-5 h-5 text-green-400"></i>
+        <span class="text-sm">Pitch copied!</span>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileCloseBtn = document.getElementById('mobile-close-btn');
+        const mobileDrawer = document.getElementById('mobile-drawer');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileDrawer.classList.remove('translate-x-full');
+        });
+        mobileCloseBtn.addEventListener('click', () => {
+            mobileDrawer.classList.add('translate-x-full');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inputs
+            const sliderFollowers = document.getElementById('slider-followers');
+            const sliderViews = document.getElementById('slider-views');
+            const valFollowers = document.getElementById('val-followers');
+            const valViews = document.getElementById('val-views');
+            
+            const nicheDropdown = document.getElementById('input-niche');
+            const toggleWhitelisting = document.getElementById('toggle-whitelisting');
+            
+            const chkIG = document.getElementById('chk-ig');
+            const chkStory = document.getElementById('chk-story');
+            const chkTK = document.getElementById('chk-tk');
+            const chkYT = document.getElementById('chk-yt');
+
+            // Style wrappers for checkboxes
+            const labels = [
+                { chk: chkIG, lbl: document.getElementById('label-ig') },
+                { chk: chkStory, lbl: document.getElementById('label-story') },
+                { chk: chkTK, lbl: document.getElementById('label-tk') },
+                { chk: chkYT, lbl: document.getElementById('label-yt') }
+            ];
+
+            // Outputs
+            const outRecommended = document.getElementById('out-recommended');
+            const outBaseline = document.getElementById('out-baseline');
+            const outAggressive = document.getElementById('out-aggressive');
+
+            // Format number helpers
+            const formatNum = (num) => new Intl.NumberFormat('en-US').format(num);
+            const formatMoney = (num) => new Intl.NumberFormat('en-US', {maximumFractionDigits: 0}).format(num);
+
+            function updateCheckboxStyles() {
+                labels.forEach(({chk, lbl}) => {
+                    if(chk.checked) {
+                        lbl.classList.add('border-cherry-600', 'bg-cherry-100');
+                        lbl.classList.remove('border-warmGray-200', 'bg-white');
+                        lbl.querySelector('span').classList.add('text-charcoal');
+                        lbl.querySelector('span').classList.remove('text-warmGray-400');
+                    } else {
+                        lbl.classList.remove('border-cherry-600', 'bg-cherry-100');
+                        lbl.classList.add('border-warmGray-200', 'bg-white');
+                        lbl.querySelector('span').classList.remove('text-charcoal');
+                        lbl.querySelector('span').classList.add('text-warmGray-400');
+                    }
+                });
+            }
+
+            // Animate number function
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = formatMoney(Math.floor(progress * (end - start) + start));
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            let prevRecommended = 0;
+            let prevBaseline = 0;
+            let prevAggressive = 0;
+
+            function calculateRates() {
+                let fText = valFollowers.value.replace(/,/g, '').replace(/\+/g, '');
+                let vText = valViews.value.replace(/,/g, '').replace(/\+/g, '');
+                let f = parseInt(fText) || 0;
+                let v = parseInt(vText) || 0;
+                
+                updateCheckboxStyles();
+
+                // Core Logic
+                // Base calculation: $15 per 10k followers + $25 CPM on views
+                let basePrice = (f / 10000 * 15) + (v / 1000 * 25);
+                
+                // If NO deliverables selected, just assume a flat fee for the audience access
+                if (!chkIG.checked && !chkStory.checked && !chkTK.checked && !chkYT.checked) {
+                    basePrice = basePrice * 0.5; 
+                }
+
+                if (chkIG.checked) basePrice += 200;
+                if (chkStory.checked) basePrice += 150;
+                if (chkTK.checked) basePrice += 250;
+                if (chkYT.checked) basePrice += 200;
+
+                let multiplier = parseFloat(nicheDropdown.value);
+                if (toggleWhitelisting.checked) multiplier += 0.3; // +30% for whitelisting
+
+                let recommended = Math.max(basePrice * multiplier, 100);
+                let baseline = recommended * 0.75;
+                let aggressive = recommended * 1.4;
+
+                // Animate values
+                animateValue(outRecommended, prevRecommended, recommended, 300);
+                animateValue(outBaseline, prevBaseline, baseline, 300);
+                animateValue(outAggressive, prevAggressive, aggressive, 300);
+
+                prevRecommended = recommended;
+                prevBaseline = baseline;
+                prevAggressive = aggressive;
+            }
+
+            // Event Listeners for Sliders
+            sliderFollowers.addEventListener('input', (e) => {
+                let f = parseInt(e.target.value);
+                valFollowers.value = formatNum(f) + (f >= 1000000 ? '+' : '');
+                calculateRates();
+            });
+            sliderViews.addEventListener('input', (e) => {
+                let v = parseInt(e.target.value);
+                valViews.value = formatNum(v) + (v >= 500000 ? '+' : '');
+                calculateRates();
+            });
+
+            // Live formatter with cursor retention
+            function handleLiveFormat(inputEl) {
+                let cursorPosition = inputEl.selectionStart;
+                let rawText = inputEl.value;
+                
+                // Count digits before cursor
+                let substringBeforeCursor = rawText.substring(0, cursorPosition);
+                let digitsBeforeCursor = (substringBeforeCursor.match(/[0-9]/g) || []).length;
+
+                let fText = rawText.replace(/[^0-9]/g, '');
+                let f = parseInt(fText) || 0;
+                
+                if (fText === '') {
+                    inputEl.value = '';
+                    return 0;
+                }
+
+                let formatted = formatNum(f);
+                inputEl.value = formatted;
+                
+                // Reposition cursor
+                let newCursorPos = 0;
+                let digitsSeen = 0;
+                for (let i = 0; i < formatted.length; i++) {
+                    if (/[0-9]/.test(formatted[i])) {
+                        digitsSeen++;
+                    }
+                    if (digitsSeen === digitsBeforeCursor) {
+                        newCursorPos = i + 1;
+                        break;
+                    }
+                }
+                
+                if(digitsBeforeCursor === 0) newCursorPos = 0;
+                inputEl.setSelectionRange(newCursorPos, newCursorPos);
+                
+                return f;
+            }
+
+            // Event Listeners for Text Inputs
+            valFollowers.addEventListener('input', () => {
+                let f = handleLiveFormat(valFollowers);
+                sliderFollowers.value = f;
+                calculateRates();
+            });
+            valFollowers.addEventListener('blur', () => {
+                let fText = valFollowers.value.replace(/[^0-9]/g, '');
+                let f = parseInt(fText) || 0;
+                valFollowers.value = formatNum(f) + (f >= 1000000 ? '+' : '');
+            });
+
+            valViews.addEventListener('input', () => {
+                let v = handleLiveFormat(valViews);
+                sliderViews.value = v;
+                calculateRates();
+            });
+            valViews.addEventListener('blur', () => {
+                let vText = valViews.value.replace(/[^0-9]/g, '');
+                let v = parseInt(vText) || 0;
+                valViews.value = formatNum(v) + (v >= 500000 ? '+' : '');
+            });
+
+            // Event Listeners for other inputs
+            const inputs = [nicheDropdown, toggleWhitelisting, chkIG, chkStory, chkTK, chkYT];
+            inputs.forEach(input => input.addEventListener('input', calculateRates));
+            inputs.forEach(input => input.addEventListener('change', calculateRates));
+
+            // Initial Calc
+            calculateRates();
+
+            // Modal & Pitch Logic
+            const modalOverlay = document.getElementById('modal-overlay');
+            const btnGenerate = document.getElementById('btn-generate-pitch');
+            const btnClose = document.getElementById('close-modal');
+            const pitchText = document.getElementById('pitch-text');
+            const btnCopyPitch = document.getElementById('btn-copy-pitch');
+            const toast = document.getElementById('toast');
+
+            btnGenerate.addEventListener('click', () => {
+                let deliverables = [];
+                if(chkIG.checked) deliverables.push("1x Instagram Reel");
+                if(chkStory.checked) deliverables.push("3x Instagram Stories with Link");
+                if(chkTK.checked) deliverables.push("1x TikTok Video");
+                if(chkYT.checked) deliverables.push("1x YouTube Short");
+
+                let delivString = deliverables.length > 0 ? deliverables.join('\n- ') : "a custom integrated post";
+                let whitelistingText = toggleWhitelisting.checked ? "\n- 30 Days of Paid Ads/Whitelisting Rights included." : "";
+
+                const pitch = `Hi [Brand Name] Team,
+
+Thank you so much for reaching out! I love what you guys are doing at [Brand] and I think your product would resonate perfectly with my audience. 
+
+Based on the campaign scope, here is my proposed rate for this partnership:
+
+Total Investment: $${formatMoney(prevRecommended)}
+
+Deliverables Included:
+- ${delivString}${whitelistingText}
+
+This rate guarantees high-quality production, my authentic voice, and access to my highly engaged audience (averaging ${formatNum(sliderViews.value)} views per video).
+
+Let me know if this aligns with your budget, or if you'd like to jump on a quick call to discuss further. I have attached my media kit for your reference.
+
+Best regards,
+[Your Name]`;
+                
+                pitchText.value = pitch;
+                modalOverlay.classList.add('show');
+            });
+
+            btnClose.addEventListener('click', () => {
+                modalOverlay.classList.remove('show');
+            });
+
+            btnCopyPitch.addEventListener('click', () => {
+                navigator.clipboard.writeText(pitchText.value).then(() => {
+                    toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-8');
+                    setTimeout(() => {
+                        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-8');
+                    }, 2500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+/* global.css - CherryChic Design System */
+
+body {
+    background-color: #fcfbf9; /* Warm off-white/cream */
+    color: #1a1a1a; /* Deep charcoal */
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #fcfbf9;
+}
+::-webkit-scrollbar-thumb {
+    background: #e2e0dc;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #d1cfcb;
+}
+
+/* Base Styles */
+.cc-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Typography Hierarchy */
+.cc-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #1a1a1a;
+}
+@media (min-width: 768px) {
+    .cc-h1 {
+        font-size: 4.5rem;
+    }
+}
+
+.cc-h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #1a1a1a;
+}
+@media (min-width: 768px) {
+    .cc-h2 {
+        font-size: 3rem;
+    }
+}
+
+.cc-h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #1a1a1a;
+}
+
+.cc-body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4a4a4a;
+}
+.cc-body-large {
+    font-size: 1.125rem;
+}
+
+.cc-eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #8c2a3e; /* Deep cherry */
+}
+
+/* Component Classes */
+.cc-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8c2a3e;
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    border: 1px solid transparent;
+}
+.cc-btn-primary:hover {
+    background-color: #6b1f2e;
+}
+.cc-btn-primary:active {
+    transform: translateY(1px);
+}
+
+.cc-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #1a1a1a;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    border: 1px solid #d1cfcb;
+    transition: all 0.2s ease;
+}
+.cc-btn-secondary:hover {
+    background-color: #f5f3f0;
+    border-color: #1a1a1a;
+}
+
+.cc-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e0dc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.cc-card:hover {
+    border-color: #d1cfcb;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.cc-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    background-color: #fcebeb; /* Blush */
+    color: #8c2a3e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Specific UI Previews inside cards */
+.cc-preview-container {
+    background-color: #fcfbf9;
+    border: 1px solid #e2e0dc;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
